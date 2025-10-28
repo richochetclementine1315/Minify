@@ -1,0 +1,42 @@
+# ============================================
+# Docker Compose Configuration for URL Shortener
+# ============================================
+# Defines the Docker Compose file format version
+version: "3"
+
+# Define all services (containers) that make up the application
+services:
+  # ============================================
+  # API Service - Go Fiber REST API
+  # ============================================
+  api:
+    # Build the API container using the Dockerfile in the ./api directory
+    build: api
+    
+    # Port mapping: HOST:CONTAINER
+    # Maps port 3000 on your machine to port 3000 in the container
+    ports:
+      - "3000:3000"
+    
+    # Ensure the database (db) service starts before the API service
+    # The API depends on Redis to store shortened URLs
+    depends_on:
+      - db
+  
+  # ============================================
+  # Database Service - Redis Cache/Database
+  # ============================================
+  db:
+    # Build the Redis container using the Dockerfile in the ./db directory
+    build: db
+    
+    # Port mapping: HOST:CONTAINER
+    # Maps port 6379 on your machine to port 6379 in the container (Redis default port)
+    ports:
+      - "6379:6379"
+    
+    # Volume mapping: HOST:CONTAINER
+    # Persists Redis data to ./data directory on your machine
+    # This ensures data survives container restarts
+    volumes:
+      - ./data:/data
