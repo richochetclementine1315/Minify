@@ -15,9 +15,9 @@ import (
 )
 
 type request struct {
-	URL         string        `json:"url"`
-	CustomShort string        `json:"short"`
-	Expiry      time.Duration `json:"expiry"`
+	URL         string `json:"url"`
+	CustomShort string `json:"short"`
+	Expiry      int    `json:"expiry"` // Expiry time in hours
 }
 type response struct {
 	URL         string        `json:"url"`
@@ -81,16 +81,18 @@ func ShortenURL(c *fiber.Ctx) error {
 	}
 	// Set expiry time
 	if body.Expiry == 0 {
-		body.Expiry = 24 * time.Hour
+		body.Expiry = 24 // Default 24 hours
 	}
-	err = r.Set(database.Ctx, id, body.URL, body.Expiry).Err()
+	// Convert hours to time.Duration
+	expiryDuration := time.Duration(body.Expiry) * time.Hour
+	err = r.Set(database.Ctx, id, body.URL, expiryDuration).Err()
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Unable to connect to DB"})
 	}
 	resp := response{
 		URL:            body.URL,
 		CustomShort:    "",
-		Expiry:         body.Expiry,
+		Expiry:         expiryDuration,
 		XRateRemaining: 10,
 		XRateLimitRest: 30,
 	}
