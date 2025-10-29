@@ -1,0 +1,26 @@
+# Render Build Script for Go Backend
+# This file tells Render how to build and run your Go application
+
+build:
+  # Install Go dependencies
+  - go mod download
+  
+services:
+  - type: web
+    name: minify-api
+    runtime: go
+    buildCommand: go build -o main .
+    startCommand: ./main
+    envVars:
+      - key: DB_ADDRESS
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: API_QUOTA
+        value: "10"
+      - key: APP_PORT
+        value: ":3000"
+      - key: DOMAIN
+        sync: false
+      - key: APP_DOMAIN
+        sync: false

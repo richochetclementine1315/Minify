@@ -4,6 +4,9 @@ import { toast } from 'react-toastify'
 import { FiLink, FiCopy, FiCheck, FiClock, FiZap } from 'react-icons/fi'
 import './UrlShortener.css'
 
+// API URL - uses environment variable in production, localhost in development
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
 const UrlShortener = () => {
   const [url, setUrl] = useState('')
   const [customShort, setCustomShort] = useState('')
@@ -33,7 +36,7 @@ const UrlShortener = () => {
     setResult(null)
 
     try {
-      const response = await axios.post('/api/v1', {
+      const response = await axios.post(`${API_URL}/api/v1`, {
         url: url,
         short: customShort || ' ',
         expiry: expiry
