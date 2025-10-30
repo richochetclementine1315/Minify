@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Circle background -->
+  <circle cx="24" cy="24" r="22" fill="url(#grad)"/>
+  
+  <!-- Link/chain icon -->
+  <path d="M20 28L18.5 29.5C16.5 31.5 13.5 31.5 11.5 29.5C9.5 27.5 9.5 24.5 11.5 22.5L15 19M28 20L29.5 18.5C31.5 16.5 34.5 16.5 36.5 18.5C38.5 20.5 38.5 23.5 36.5 25.5L33 29" 
+        stroke="white" 
+        stroke-width="3" 
+        stroke-linecap="round"
+        fill="none"/>
+  <line x1="20" y1="28" x2="28" y2="20" 
+        stroke="white" 
+        stroke-width="3" 
+        stroke-linecap="round"/>
+</svg>
