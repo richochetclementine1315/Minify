@@ -14,6 +14,15 @@ import (
 )
 
 func setupRoutes(app *fiber.App) {
+	// Health check endpoint
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"status":  "ok",
+			"service": "Minify URL Shortener API",
+			"version": "1.0.0",
+		})
+	})
+
 	app.Get("/:url", routes.ResolveURL)
 	app.Post("/api/v1", routes.ShortenURL)
 }
