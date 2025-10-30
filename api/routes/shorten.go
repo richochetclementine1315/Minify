@@ -37,7 +37,17 @@ func ShortenURL(c *fiber.Ctx) error {
 	// Allow calling the api by 10 time only in 30 mins
 	r2 := database.CreateClient(1)
 	defer r2.Close()
-	_, err := r2.Get(database.Ctx, c.IP()).Result()
+
+	// Test Redis connection before proceeding
+	_, err := r2.Ping(database.Ctx).Result()
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error":   "Database connection failed",
+			"details": err.Error(),
+		})
+	}
+
+	_, err = r2.Get(database.Ctx, c.IP()).Result()
 	var val string
 	if err == redis.Nil {
 		_ = r2.Set(database.Ctx, c.IP(), os.Getenv("API_QUOTA"), 30*60*time.Second).Err()
@@ -46,7 +56,7 @@ func ShortenURL(c *fiber.Ctx) error {
 		valInt, _ := strconv.Atoi(val)
 		if valInt <= 0 {
 			limit, _ := r2.TTL(database.Ctx, c.IP()).Result()
-			return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{
+			return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
 				"error":            "Rate limit exceeded",
 				"rate_limit_reset": limit / time.Nanosecond / time.Minute,
 			})
