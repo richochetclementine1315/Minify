@@ -1,7 +1,7 @@
 <div align="center">
 
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5d12NMUtztumCkdAhAEaji7CAJrBVet7bmQ&s" alt="Minify - Fast, Simple & Elegant URL Shortener" width="420" style="max-width:90%;height:auto;" />
-<div align="center"> # MINIFY <div/>
+<h1 style="font-size:64px; font-weight:800; margin:20px 0;">MINIFY</h1>
 
 <br/>
 
