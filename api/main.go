@@ -40,7 +40,23 @@ func main() {
 		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS",
 	}))
 
+	// Explicitly handle preflight OPTIONS requests to ensure browsers receive
+	// the required Access-Control-* headers even if other handlers return errors.
+	app.Options("/*", func(c *fiber.Ctx) error {
+		c.Set("Access-Control-Allow-Origin", "https://minify-links.vercel.app, http://localhost:5173, http://localhost:3000")
+		c.Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
+		c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		return c.SendStatus(fiber.StatusNoContent)
+	})
+
 	app.Use(logger.New())
 	setupRoutes(app)
-	log.Fatal(app.Listen(os.Getenv("APP_PORT")))
+
+	// Use APP_PORT env var if provided (e.g. ":3000"). If not set, fall back
+	// to a sensible default so local runs and some hosting environments work.
+	port := os.Getenv("APP_PORT")
+	if port == "" {
+		port = ":3000"
+	}
+	log.Fatal(app.Listen(port))
 }
