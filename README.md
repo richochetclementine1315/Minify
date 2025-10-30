@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://preview.redd.it/tebhqtatkzs91.png?width=640&crop=smart&auto=webp&s=5a09aa080b554fd5a39706ea479ddb35425d3a2c" alt="Minify - Fast, Simple & Elegant URL Shortener" width="100%"/>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5d12NMUtztumCkdAhAEaji7CAJrBVet7bmQ&s" alt="Minify - Fast, Simple & Elegant URL Shortener" width="420" style="max-width:90%;height:auto;" />
 
 <br/>
 
